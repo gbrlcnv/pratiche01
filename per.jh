@@ -1,0 +1,116 @@
+entity Person {
+	ID Integer required,
+	name String required, /**nome o ragione sociale */
+	surname String required,
+	birthDate ZonedDateTime required,
+	piva String,
+	cf String,
+	phoneNumber String,
+	flagLegal YesNotEnum required /* Si per le persone giuridiche */,
+	idType IDTypeEnum, /*tipo di documento utilizzato per l'identificazione */
+	idNumber String,
+	flagNewsletter YesNotEnum required
+}
+
+enum IDTypeEnum {
+	CARTAIDENTITA, PASSAPORTO
+}
+enum YesNotEnum {
+	YES, NO
+}
+
+
+entity Request {
+	ID Integer required,
+	subject String required, /**nome o ragione sociale */
+	code String required,
+ 
+     submissionDate ZonedDateTime
+	}
+ entity RequestStatusLog {
+	ID Integer required,
+ 
+	note String,
+	statusFromDate ZonedDateTime required,
+	statusChangeDate ZonedDateTime required
+
+}
+ 
+ entity RequestType {
+	ID Integer required,
+  	reqType ReqTypeEnum, 
+ 	code String
+	
+}
+entity RequestStatus {
+	ID Integer required,
+	code RequestStatusEnum required,
+	description String required
+}
+enum RequestStatusEnum {
+	PROPOSED, OPEN, CLOSED, REFUSED,  APPROVED, DELETED, SUCCESS
+}
+enum ReqTypeEnum {
+	RICORSOTRIBUTARIO, RATEAZIONE
+}
+enum InOutEnum {
+	IN, OUT
+}
+enum LocaleEnum {
+	EN, IT
+}
+
+entity RequestDoc{ /** associazione tra documenti e richieste, vanno nel tab documenti*/
+	ID Integer required,
+   submissionDate ZonedDateTime,
+   updateDate ZonedDateTime,
+	description String required,
+    inOut InOutEnum required /* in inviati dall'utente, out inseriti dalla piattaforma */
+}
+entity RequestComment { 
+	ID Integer required,
+	text String required, 
+	title String, 
+	commentDate ZonedDateTime,
+    inOut  InOutEnum 
+
+	
+}
+
+ entity DocStore {
+	ID Integer required,
+	locale LocaleEnum required,
+	code String required,
+	title String required,
+	description String required,
+	contentBinary ImageBlob,
+	creationDate ZonedDateTime required,
+	contentText Blob,
+	mimeType String , /** valutare se serve, nel caso converrebbe mettere enum*/
+	path String /** da valutare, i file esterni possono essere indicizzati da Google */
+	
+}
+
+relationship OneToMany {
+	
+		Request {comment} to RequestComment,
+
+	Person{request} to Request{owner},
+	RequestType to Request{type},
+
+    Request {doc} to RequestDoc
+    RequestnStatus to Request{status},
+    Request{statusLog} to 	RequestStatusLog{campaign} ,
+	RequestStatus to 	RequestStatusLog{oldStatus} ,
+	Requesttatus to 	RequestStatusLog{newStatus} 
+	
+	}
+relationship OneToOne {
+	RequestRicorsoTributario {request} to Request,
+    RequestDoc {doc} to DocStore
+}
+service * with serviceClass
+paginate Request,  Person with pager
+
+
+
