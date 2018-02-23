@@ -1,0 +1,107 @@
+entity Person {
+	ID Integer required,
+	name String required, /**nome o ragione sociale */
+	surname String required,
+	birthDate ZonedDateTime required,
+	piva String,
+	cf String,
+	phoneNumber String,
+	flagLegal YesNotEnum required /* Si per le persone giuridiche */,
+	idType IDTypeEnum, /*tipo di documento utilizzato per l'identificazione */
+	idNumber String,
+	flagNewsletter YesNotEnum required
+}
+entity Request {
+	ID Integer required,
+	subject String required, /**nome o ragione sociale */
+	code String required,
+	reqType ReqTypeEnum, 
+   	reqStatus ReqStatusEnum, /*tipo di documento utilizzato per l'identificazione */
+     submissionDate ZonedDateTime
+	}
+ entity RequestStatusLog {
+	ID Integer required,
+
+	note String,
+	statusFromDate ZonedDateTime required,
+	statusChangeDate ZonedDateTime required
+
+}
+ 
+ entity DocStore {
+	ID Integer required,
+	locale LocaleEnum required,
+	code String required,
+	title String required,
+	description String required,
+	contentBinary ImageBlob,
+	creationDate ZonedDateTime required,
+	contentText Blob,
+	mimeType String , /** valutare se serve, nel caso converrebbe mettere enum*/
+	path String /** da valutare, i file esterni possono essere indicizzati da Google */
+	
+}
+enum InOutEnum {
+	IN, OUT
+}
+entity RequestDoc{ /** associazione tra documenti e richieste, vanno nel tab documenti*/
+	ID Integer required,
+   submissionDate ZonedDateTime,
+	description String required,
+    inOut InOutEnum required /* in inviati dall'utente, out inseriti dalla piattaforma */
+
+}
+entity RequestStatus {
+	ID Integer required,
+	code CampaignStatusEnum required,
+	description String required
+}
+enum RequestStatusEnum {
+	PROPOSED, OPEN, CLOSED, REFUSED,  APPROVED, DELETED, SUCCESS
+}
+enum ReqTypeEnum {
+	RICORSOTRIBUTARIO, RATEAZIONE
+}
+entity RequestRicorsoTributario {
+	ID Integer required,
+	notificaDate ZonedDateTime required, /**nome o ragione sociale */
+	emissioneRuoloDate ZonedDateTime required,
+    tipologiaAtto TipologiaAttoEnum,
+	reqType ReqTypeEnum /** tipo di documento utilizzato per l'identificazione */
+	
+}
+entity RequestComment { 
+	ID Integer required,
+	text String required, 
+	title String, 
+	commentDate ZonedDateTime,
+    inOut  InOutEnum 
+
+	
+}
+
+
+enum TipologiaAttoEnum {
+	VERBALEACCERTAMENTO, VERBALECOSTATAZIONE, CARTELLAESATTORIALE, PREAVVISOIPOTECA
+}
+
+relationship OneToMany {
+	
+		Request {comment} to RequestComment,
+
+	Person{request} to Request{owner},
+	RequestType to Request{type},
+
+    Request {doc} to RequestDoc
+    RequestnStatus to Request{status},
+    Request{statusLog} to 	RequestStatusLog{campaign} ,
+	RequestStatus to 	RequestStatusLog{oldStatus} ,
+	Requesttatus to 	RequestStatusLog{newStatus} 
+	
+	}
+relationship OneToMany {
+	RequestRicorsoTributario {request} to Request
+}
+service * with serviceClass
+paginate Campaign, Subscription1, Tag, Person with pager
+
