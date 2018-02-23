@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "text",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "commentDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "inOut",
+            "fieldType": "InOutEnum",
+            "fieldValues": "IN,OUT"
+        }
+    ],
+    "changelogDate": "20180223201123",
+    "entityTableName": "request_comment",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

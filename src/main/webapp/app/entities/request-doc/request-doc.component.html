@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span>Request Docs</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request-doc" [routerLink]="['/', { outlets: { popup: ['request-doc-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Request Doc
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requestDocs">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Submission Date</span></th>
+            <th><span>Update Date</span></th>
+            <th><span>Description</span></th>
+            <th><span>In Out</span></th>
+            <th><span>Request</span></th>
+            <th><span>Doc</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let requestDoc of requestDocs ;trackBy: trackId">
+                <td><a [routerLink]="['../request-doc', requestDoc.id ]">{{requestDoc.id}}</a></td>
+                <td>{{requestDoc.submissionDate | date:'medium'}}</td>
+                <td>{{requestDoc.updateDate | date:'medium'}}</td>
+                <td>{{requestDoc.description}}</td>
+                <td>{{requestDoc.inOut}}</td>
+                <td>
+                    <div *ngIf="requestDoc.request">
+                        <a [routerLink]="['../request', requestDoc.request?.id ]" >{{requestDoc.request?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="requestDoc.doc">
+                        <a [routerLink]="['../doc-store', requestDoc.doc?.id ]" >{{requestDoc.doc?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request-doc', requestDoc.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-doc/'+ requestDoc.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-doc/'+ requestDoc.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
