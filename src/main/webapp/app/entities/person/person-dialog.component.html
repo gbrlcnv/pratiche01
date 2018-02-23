@@ -1,0 +1,117 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPersonLabel">Create or edit a Person</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!person.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="person.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="person.name" required/>
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_surname" ngbTooltip="nome o ragione sociale">Surname</label>
+            <input type="text" class="form-control" name="surname" id="field_surname"
+                [(ngModel)]="person.surname" required/>
+            <div [hidden]="!(editForm.controls.surname?.dirty && editForm.controls.surname?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.surname?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_birthDate">Birth Date</label>
+            <div class="d-flex">
+                <input id="field_birthDate" type="datetime-local" class="form-control" name="birthDate" [(ngModel)]="person.birthDate"
+                required/>
+            </div>
+            <div [hidden]="!(editForm.controls.birthDate?.dirty && editForm.controls.birthDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.birthDate?.errors?.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.birthDate?.errors?.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_piva">Piva</label>
+            <input type="text" class="form-control" name="piva" id="field_piva"
+                [(ngModel)]="person.piva" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_cf">Cf</label>
+            <input type="text" class="form-control" name="cf" id="field_cf"
+                [(ngModel)]="person.cf" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_phoneNumber">Phone Number</label>
+            <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
+                [(ngModel)]="person.phoneNumber" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_flagLegal" ngbTooltip="Si per le persone giuridiche">Flag Legal</label>
+            <select class="form-control" name="flagLegal" [(ngModel)]="person.flagLegal" id="field_flagLegal"  required>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
+            </select>
+            <div [hidden]="!(editForm.controls.flagLegal?.dirty && editForm.controls.flagLegal?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.flagLegal?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_idType">Id Type</label>
+            <select class="form-control" name="idType" [(ngModel)]="person.idType" id="field_idType" >
+                <option value="CARTAIDENTITA">CARTAIDENTITA</option>
+                <option value="PASSAPORTO">PASSAPORTO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_idNumber" ngbTooltip="tipo di documento utilizzato per l&#39;identificazione">Id Number</label>
+            <input type="text" class="form-control" name="idNumber" id="field_idNumber"
+                [(ngModel)]="person.idNumber" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_flagNewsletter">Flag Newsletter</label>
+            <select class="form-control" name="flagNewsletter" [(ngModel)]="person.flagNewsletter" id="field_flagNewsletter"  required>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
+            </select>
+            <div [hidden]="!(editForm.controls.flagNewsletter?.dirty && editForm.controls.flagNewsletter?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.flagNewsletter?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

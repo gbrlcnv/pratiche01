@@ -1,0 +1,46 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "otherEntityRelationshipName": "status"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "requestStatusLog",
+            "otherEntityName": "requestStatusLog",
+            "otherEntityRelationshipName": "oldStatus"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "requestStatusLog",
+            "otherEntityName": "requestStatusLog",
+            "otherEntityRelationshipName": "newStatus"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "RequestStatusEnum",
+            "fieldValues": "PROPOSED,OPEN,CLOSED,REFUSED,APPROVED,DELETED,SUCCESS",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180223201121",
+    "entityTableName": "request_status",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

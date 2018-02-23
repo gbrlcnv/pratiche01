@@ -1,0 +1,80 @@
+<div>
+    <h2>
+        <span>Request Status Logs</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request-status-log" [routerLink]="['/', { outlets: { popup: ['request-status-log-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Request Status Log
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requestStatusLogs">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Note</span></th>
+            <th><span>Status From Date</span></th>
+            <th><span>Status Change Date</span></th>
+            <th><span>Campaign</span></th>
+            <th><span>Old Status</span></th>
+            <th><span>New Status</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let requestStatusLog of requestStatusLogs ;trackBy: trackId">
+                <td><a [routerLink]="['../request-status-log', requestStatusLog.id ]">{{requestStatusLog.id}}</a></td>
+                <td>{{requestStatusLog.note}}</td>
+                <td>{{requestStatusLog.statusFromDate | date:'medium'}}</td>
+                <td>{{requestStatusLog.statusChangeDate | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="requestStatusLog.campaign">
+                        <a [routerLink]="['../request', requestStatusLog.campaign?.id ]" >{{requestStatusLog.campaign?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="requestStatusLog.oldStatus">
+                        <a [routerLink]="['../request-status', requestStatusLog.oldStatus?.id ]" >{{requestStatusLog.oldStatus?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="requestStatusLog.newStatus">
+                        <a [routerLink]="['../request-status', requestStatusLog.newStatus?.id ]" >{{requestStatusLog.newStatus?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request-status-log', requestStatusLog.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-status-log/'+ requestStatusLog.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-status-log/'+ requestStatusLog.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

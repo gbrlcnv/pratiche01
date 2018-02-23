@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "requestRicorsoTributario"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "notificaDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "emissioneRuoloDate",
+            "javadoc": "nome o ragione sociale",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "tipologiaAtto",
+            "fieldType": "TipologiaAttoEnum",
+            "fieldValues": "VERBALEACCERTAMENTO,VERBALECOSTATAZIONE,CARTELLAESATTORIALE,PREAVVISOIPOTECA"
+        }
+    ],
+    "changelogDate": "20180223201125",
+    "entityTableName": "request_ricorso_tributario",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

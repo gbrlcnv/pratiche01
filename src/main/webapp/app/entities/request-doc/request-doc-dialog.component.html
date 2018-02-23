@@ -1,0 +1,77 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myRequestDocLabel">Create or edit a Request Doc</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!requestDoc.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="requestDoc.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_submissionDate">Submission Date</label>
+            <div class="d-flex">
+                <input id="field_submissionDate" type="datetime-local" class="form-control" name="submissionDate" [(ngModel)]="requestDoc.submissionDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_updateDate">Update Date</label>
+            <div class="d-flex">
+                <input id="field_updateDate" type="datetime-local" class="form-control" name="updateDate" [(ngModel)]="requestDoc.updateDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="requestDoc.description" required/>
+            <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.description?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_inOut" ngbTooltip="in inviati dall&#39;utente, out inseriti dalla piattaforma">In Out</label>
+            <select class="form-control" name="inOut" [(ngModel)]="requestDoc.inOut" id="field_inOut"  required>
+                <option value="IN">IN</option>
+                <option value="OUT">OUT</option>
+            </select>
+            <div [hidden]="!(editForm.controls.inOut?.dirty && editForm.controls.inOut?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.inOut?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_request">Request</label>
+            <select class="form-control" id="field_request" name="request" [(ngModel)]="requestDoc.request" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="requestOption.id === requestDoc.request?.id ? requestDoc.request : requestOption" *ngFor="let requestOption of requests; trackBy: trackRequestById">{{requestOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_doc">Doc</label>
+            <select class="form-control" id="field_doc" name="doc" [(ngModel)]="requestDoc.doc">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="docStoreOption.id === requestDoc.doc?.id ? requestDoc.doc : docStoreOption" *ngFor="let docStoreOption of docs; trackBy: trackDocStoreById">{{docStoreOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
