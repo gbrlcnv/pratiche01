@@ -1,0 +1,50 @@
+
+<div *ngIf="requestDoc">
+    <h2><span>Request Doc</span> {{requestDoc.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Submission Date</span></dt>
+        <dd>
+            <span>{{requestDoc.submissionDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Update Date</span></dt>
+        <dd>
+            <span>{{requestDoc.updateDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{requestDoc.description}}</span>
+        </dd>
+        <dt><span ngbTooltip="in inviati dall&#39;utente, out inseriti dalla piattaforma">In Out</span></dt>
+        <dd>
+            <span>{{requestDoc.inOut}}</span>
+        </dd>
+        <dt><span>Request</span></dt>
+        <dd>
+            <div *ngIf="requestDoc.request">
+                <a [routerLink]="['/request', requestDoc.request?.id]">{{requestDoc.request?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Doc</span></dt>
+        <dd>
+            <div *ngIf="requestDoc.doc">
+                <a [routerLink]="['/doc-store', requestDoc.doc?.id]">{{requestDoc.doc?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'request-doc/'+ requestDoc.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

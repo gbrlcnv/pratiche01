@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity RequestDoc.
+    -->
+    <changeSet id="20180223202636-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="request_id"
+                                 baseTableName="request_doc"
+                                 constraintName="fk_request_doc_request_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="request"/>
+
+        <addForeignKeyConstraint baseColumnNames="doc_id"
+                                 baseTableName="request_doc"
+                                 constraintName="fk_request_doc_doc_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="doc_store"/>
+
+    </changeSet>
+</databaseChangeLog>

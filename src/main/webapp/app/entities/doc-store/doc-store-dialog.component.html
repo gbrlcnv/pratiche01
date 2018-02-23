@@ -1,0 +1,133 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDocStoreLabel">Create or edit a Doc Store</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!docStore.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="docStore.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_locale">Locale</label>
+            <select class="form-control" name="locale" [(ngModel)]="docStore.locale" id="field_locale"  required>
+                <option value="EN">EN</option>
+                <option value="IT">IT</option>
+            </select>
+            <div [hidden]="!(editForm.controls.locale?.dirty && editForm.controls.locale?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.locale?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                [(ngModel)]="docStore.code" required/>
+            <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.code?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                [(ngModel)]="docStore.title" required/>
+            <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.title?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="docStore.description" required/>
+            <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.description?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_contentBinary">Content Binary</label>
+            <div>
+                <img [src]="'data:' + docStore.contentBinaryContentType + ';base64,' + docStore.contentBinary" style="max-height: 100px;" *ngIf="docStore.contentBinary" alt="docStore image"/>
+                <div *ngIf="docStore.contentBinary" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{docStore.contentBinaryContentType}}, {{byteSize(docStore.contentBinary)}}</span>
+                    <button type="button" (click)="clearInputImage('contentBinary', 'contentBinaryContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_contentBinary" (change)="setFileData($event, docStore, 'contentBinary', true)" accept="image/*"/>
+            </div>
+            <input type="hidden" class="form-control" name="contentBinary" id="field_contentBinary"
+                [(ngModel)]="docStore.contentBinary" />
+            <input type="hidden" class="form-control" name="contentBinaryContentType" id="field_contentBinaryContentType"
+                [(ngModel)]="docStore.contentBinaryContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_creationDate">Creation Date</label>
+            <div class="d-flex">
+                <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" [(ngModel)]="docStore.creationDate"
+                required/>
+            </div>
+            <div [hidden]="!(editForm.controls.creationDate?.dirty && editForm.controls.creationDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creationDate?.errors?.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.creationDate?.errors?.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_contentText">Content Text</label>
+            <div>
+                <div *ngIf="docStore.contentText" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(docStore.contentTextContentType, docStore.contentText)">open</a><br>
+                    <span class="pull-left">{{docStore.contentTextContentType}}, {{byteSize(docStore.contentText)}}</span>
+                    <button type="button" (click)="docStore.contentText=null;docStore.contentTextContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_contentText" (change)="setFileData($event, docStore, 'contentText', false)"/>
+            </div>
+            <input type="hidden" class="form-control" name="contentText" id="field_contentText"
+                [(ngModel)]="docStore.contentText" />
+            <input type="hidden" class="form-control" name="contentTextContentType" id="field_contentTextContentType"
+                [(ngModel)]="docStore.contentTextContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_mimeType">Mime Type</label>
+            <input type="text" class="form-control" name="mimeType" id="field_mimeType"
+                [(ngModel)]="docStore.mimeType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_path" ngbTooltip="valutare se serve, nel caso converrebbe mettere enum">Path</label>
+            <input type="text" class="form-control" name="path" id="field_path"
+                [(ngModel)]="docStore.path" />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

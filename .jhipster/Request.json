@@ -1,0 +1,68 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "comment",
+            "otherEntityName": "requestComment",
+            "otherEntityRelationshipName": "request"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "doc",
+            "otherEntityName": "requestDoc",
+            "otherEntityRelationshipName": "request"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "statusLog",
+            "otherEntityName": "requestStatusLog",
+            "otherEntityRelationshipName": "campaign"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "owner",
+            "otherEntityName": "person",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "type",
+            "otherEntityName": "requestType",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "status",
+            "otherEntityName": "requestStatus",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "subject",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "code",
+            "javadoc": "nome o ragione sociale",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "submissionDate",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20180223202632",
+    "entityTableName": "request",
+    "dto": "no",
+    "pagination": "pager",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

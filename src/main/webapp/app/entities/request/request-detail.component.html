@@ -1,0 +1,52 @@
+
+<div *ngIf="request">
+    <h2><span>Request</span> {{request.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Subject</span></dt>
+        <dd>
+            <span>{{request.subject}}</span>
+        </dd>
+        <dt><span ngbTooltip="nome o ragione sociale">Code</span></dt>
+        <dd>
+            <span>{{request.code}}</span>
+        </dd>
+        <dt><span>Submission Date</span></dt>
+        <dd>
+            <span>{{request.submissionDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Owner</span></dt>
+        <dd>
+            <div *ngIf="request.owner">
+                <a [routerLink]="['/person', request.owner?.id]">{{request.owner?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+            <div *ngIf="request.type">
+                <a [routerLink]="['/request-type', request.type?.id]">{{request.type?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <div *ngIf="request.status">
+                <a [routerLink]="['/request-status', request.status?.id]">{{request.status?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

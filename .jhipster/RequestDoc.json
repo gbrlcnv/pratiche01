@@ -1,0 +1,51 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "doc",
+            "otherEntityName": "docStore",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "requestDoc"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "submissionDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "updateDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "inOut",
+            "javadoc": "in inviati dall'utente, out inseriti dalla piattaforma",
+            "fieldType": "InOutEnum",
+            "fieldValues": "IN,OUT",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180223202636",
+    "entityTableName": "request_doc",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

@@ -1,0 +1,80 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "otherEntityRelationshipName": "owner"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "surname",
+            "javadoc": "nome o ragione sociale",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "birthDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "piva",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cf",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "flagLegal",
+            "javadoc": "Si per le persone giuridiche",
+            "fieldType": "YesNotEnum",
+            "fieldValues": "YES,NO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "idType",
+            "fieldType": "IDTypeEnum",
+            "fieldValues": "CARTAIDENTITA,PASSAPORTO"
+        },
+        {
+            "fieldName": "idNumber",
+            "javadoc": "tipo di documento utilizzato per l'identificazione",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "flagNewsletter",
+            "fieldType": "YesNotEnum",
+            "fieldValues": "YES,NO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180223202631",
+    "entityTableName": "person",
+    "dto": "no",
+    "pagination": "pager",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

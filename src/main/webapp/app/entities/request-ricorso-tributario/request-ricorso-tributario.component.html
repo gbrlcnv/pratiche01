@@ -1,0 +1,68 @@
+<div>
+    <h2>
+        <span>Request Ricorso Tributarios</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request-ricorso-tributario" [routerLink]="['/', { outlets: { popup: ['request-ricorso-tributario-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Request Ricorso Tributario
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requestRicorsoTributarios">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Notifica Date</span></th>
+            <th><span>Emissione Ruolo Date</span></th>
+            <th><span>Tipologia Atto</span></th>
+            <th><span>Request</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let requestRicorsoTributario of requestRicorsoTributarios ;trackBy: trackId">
+                <td><a [routerLink]="['../request-ricorso-tributario', requestRicorsoTributario.id ]">{{requestRicorsoTributario.id}}</a></td>
+                <td>{{requestRicorsoTributario.notificaDate | date:'medium'}}</td>
+                <td>{{requestRicorsoTributario.emissioneRuoloDate | date:'medium'}}</td>
+                <td>{{requestRicorsoTributario.tipologiaAtto}}</td>
+                <td>
+                    <div *ngIf="requestRicorsoTributario.request">
+                        <a [routerLink]="['../request', requestRicorsoTributario.request?.id ]" >{{requestRicorsoTributario.request?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request-ricorso-tributario', requestRicorsoTributario.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-ricorso-tributario/'+ requestRicorsoTributario.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-ricorso-tributario/'+ requestRicorsoTributario.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

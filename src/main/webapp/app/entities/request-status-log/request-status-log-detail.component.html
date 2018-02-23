@@ -1,0 +1,52 @@
+
+<div *ngIf="requestStatusLog">
+    <h2><span>Request Status Log</span> {{requestStatusLog.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Note</span></dt>
+        <dd>
+            <span>{{requestStatusLog.note}}</span>
+        </dd>
+        <dt><span>Status From Date</span></dt>
+        <dd>
+            <span>{{requestStatusLog.statusFromDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Status Change Date</span></dt>
+        <dd>
+            <span>{{requestStatusLog.statusChangeDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Campaign</span></dt>
+        <dd>
+            <div *ngIf="requestStatusLog.campaign">
+                <a [routerLink]="['/request', requestStatusLog.campaign?.id]">{{requestStatusLog.campaign?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Old Status</span></dt>
+        <dd>
+            <div *ngIf="requestStatusLog.oldStatus">
+                <a [routerLink]="['/request-status', requestStatusLog.oldStatus?.id]">{{requestStatusLog.oldStatus?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>New Status</span></dt>
+        <dd>
+            <div *ngIf="requestStatusLog.newStatus">
+                <a [routerLink]="['/request-status', requestStatusLog.newStatus?.id]">{{requestStatusLog.newStatus?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'request-status-log/'+ requestStatusLog.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

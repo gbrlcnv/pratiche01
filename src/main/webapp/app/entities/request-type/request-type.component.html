@@ -1,0 +1,60 @@
+<div>
+    <h2>
+        <span>Request Types</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request-type" [routerLink]="['/', { outlets: { popup: ['request-type-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Request Type
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requestTypes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Req Type</span></th>
+            <th><span>Code</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let requestType of requestTypes ;trackBy: trackId">
+                <td><a [routerLink]="['../request-type', requestType.id ]">{{requestType.id}}</a></td>
+                <td>{{requestType.reqType}}</td>
+                <td>{{requestType.code}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request-type', requestType.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-type/'+ requestType.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-type/'+ requestType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

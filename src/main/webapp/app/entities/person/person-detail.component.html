@@ -1,0 +1,62 @@
+
+<div *ngIf="person">
+    <h2><span>Person</span> {{person.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{person.name}}</span>
+        </dd>
+        <dt><span ngbTooltip="nome o ragione sociale">Surname</span></dt>
+        <dd>
+            <span>{{person.surname}}</span>
+        </dd>
+        <dt><span>Birth Date</span></dt>
+        <dd>
+            <span>{{person.birthDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Piva</span></dt>
+        <dd>
+            <span>{{person.piva}}</span>
+        </dd>
+        <dt><span>Cf</span></dt>
+        <dd>
+            <span>{{person.cf}}</span>
+        </dd>
+        <dt><span>Phone Number</span></dt>
+        <dd>
+            <span>{{person.phoneNumber}}</span>
+        </dd>
+        <dt><span ngbTooltip="Si per le persone giuridiche">Flag Legal</span></dt>
+        <dd>
+            <span>{{person.flagLegal}}</span>
+        </dd>
+        <dt><span>Id Type</span></dt>
+        <dd>
+            <span>{{person.idType}}</span>
+        </dd>
+        <dt><span ngbTooltip="tipo di documento utilizzato per l&#39;identificazione">Id Number</span></dt>
+        <dd>
+            <span>{{person.idNumber}}</span>
+        </dd>
+        <dt><span>Flag Newsletter</span></dt>
+        <dd>
+            <span>{{person.flagNewsletter}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'person/'+ person.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>
