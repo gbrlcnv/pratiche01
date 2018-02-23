@@ -1,0 +1,89 @@
+<div>
+    <h2>
+        <span>Requests</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request" [routerLink]="['/', { outlets: { popup: ['request-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Request
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requests">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="subject"><span>Subject</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="code"><span>Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="submissionDate"><span>Submission Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="owner.id"><span>Owner</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type.id"><span>Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="status.id"><span>Status</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let request of requests ;trackBy: trackId">
+                <td><a [routerLink]="['../request', request.id ]">{{request.id}}</a></td>
+                <td>{{request.subject}}</td>
+                <td>{{request.code}}</td>
+                <td>{{request.submissionDate | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="request.owner">
+                        <a [routerLink]="['../person', request.owner?.id ]" >{{request.owner?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="request.type">
+                        <a [routerLink]="['../request-type', request.type?.id ]" >{{request.type?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="request.status">
+                        <a [routerLink]="['../request-status', request.status?.id ]" >{{request.status?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request', request.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Pager is not implemented yet, so this is normal pagination instead -->
+    <div *ngIf="requests && requests.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

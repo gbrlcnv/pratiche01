@@ -1,0 +1,70 @@
+<div>
+    <h2>
+        <span>Request Comments</span>
+        <button class="btn btn-primary float-right jh-create-entity create-request-comment" [routerLink]="['/', { outlets: { popup: ['request-comment-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Request Comment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="requestComments">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Text</span></th>
+            <th><span>Title</span></th>
+            <th><span>Comment Date</span></th>
+            <th><span>In Out</span></th>
+            <th><span>Request</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let requestComment of requestComments ;trackBy: trackId">
+                <td><a [routerLink]="['../request-comment', requestComment.id ]">{{requestComment.id}}</a></td>
+                <td>{{requestComment.text}}</td>
+                <td>{{requestComment.title}}</td>
+                <td>{{requestComment.commentDate | date:'medium'}}</td>
+                <td>{{requestComment.inOut}}</td>
+                <td>
+                    <div *ngIf="requestComment.request">
+                        <a [routerLink]="['../request', requestComment.request?.id ]" >{{requestComment.request?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../request-comment', requestComment.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-comment/'+ requestComment.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'request-comment/'+ requestComment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

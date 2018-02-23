@@ -1,0 +1,44 @@
+
+<div *ngIf="requestComment">
+    <h2><span>Request Comment</span> {{requestComment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Text</span></dt>
+        <dd>
+            <span>{{requestComment.text}}</span>
+        </dd>
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{requestComment.title}}</span>
+        </dd>
+        <dt><span>Comment Date</span></dt>
+        <dd>
+            <span>{{requestComment.commentDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>In Out</span></dt>
+        <dd>
+            <span>{{requestComment.inOut}}</span>
+        </dd>
+        <dt><span>Request</span></dt>
+        <dd>
+            <div *ngIf="requestComment.request">
+                <a [routerLink]="['/request', requestComment.request?.id]">{{requestComment.request?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'request-comment/'+ requestComment.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

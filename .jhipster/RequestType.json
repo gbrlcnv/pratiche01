@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "request",
+            "otherEntityName": "request",
+            "otherEntityRelationshipName": "type"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "reqType",
+            "fieldType": "ReqTypeEnum",
+            "fieldValues": "RICORSOTRIBUTARIO,RATEAZIONE"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180223202634",
+    "entityTableName": "request_type",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

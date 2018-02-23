@@ -1,0 +1,75 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myRequestLabel">Create or edit a Request</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!request.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="request.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_subject">Subject</label>
+            <input type="text" class="form-control" name="subject" id="field_subject"
+                [(ngModel)]="request.subject" required/>
+            <div [hidden]="!(editForm.controls.subject?.dirty && editForm.controls.subject?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.subject?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_code" ngbTooltip="nome o ragione sociale">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                [(ngModel)]="request.code" required/>
+            <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.code?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_submissionDate">Submission Date</label>
+            <div class="d-flex">
+                <input id="field_submissionDate" type="datetime-local" class="form-control" name="submissionDate" [(ngModel)]="request.submissionDate"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_owner">Owner</label>
+            <select class="form-control" id="field_owner" name="owner" [(ngModel)]="request.owner" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="personOption.id === request.owner?.id ? request.owner : personOption" *ngFor="let personOption of people; trackBy: trackPersonById">{{personOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_type">Type</label>
+            <select class="form-control" id="field_type" name="type" [(ngModel)]="request.type" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="requestTypeOption.id === request.type?.id ? request.type : requestTypeOption" *ngFor="let requestTypeOption of requesttypes; trackBy: trackRequestTypeById">{{requestTypeOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_status">Status</label>
+            <select class="form-control" id="field_status" name="status" [(ngModel)]="request.status" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="requestStatusOption.id === request.status?.id ? request.status : requestStatusOption" *ngFor="let requestStatusOption of requeststatuses; trackBy: trackRequestStatusById">{{requestStatusOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
